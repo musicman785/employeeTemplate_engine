@@ -30,34 +30,63 @@ const questions = [
     {
         type: "list",
         message: "What is your role?",
-        choices: ["manager", "engineer", "intern"],
+        choices: ["Manager", "Engineer", "Intern"],
         name: "role"
-    },
-    {
-        type: "list",
-        message: "Do you wish to enter another employee?",
-        choices: ["yes", "no"],
-        name: "more"
     }
-]
+];
+const mgrQuestions = {
+    type: "input",
+    message: "What is your manager’s office number?",
+    name: "office"
+};
+const egrQuestions = {
+    type: "input",
+    message: "What is your engineer’s github user name?",
+    name: "github"
+};
+const itnQuestions = {
+    type: "input",
+    message: "What is your school name?",
+    name: "school"
+};
+
+const reStart = {
+    type: "list",
+    message: "Would you like to add another team member?",
+    choices: ["yes", "no"],
+    name: "restart"
+};
 
 let array = [];
 async function ask() {
 
     const userResponse = await inquirer.prompt(questions);
-    const { name, id, email, role} = userResponse;
-    const { more } = userResponse;
-   
-     if (more === "yes") {
-        array.push(userResponse);
+    const { name, id, email, role } = userResponse;
+    if (role === "Manager") {
+        
+        const officeNumber = await inquirer.prompt(mgrQuestions);
+        const employee = new Manager(name, id, email, officeNumber);
+        array.push(employee);
+    
+    } else if (role === "Engineer") {
+       
+        const github = await inquirer.prompt(egrQuestions);
+        const employee = new Engineer(name, id, email, github);
+        array.push(employee);
+    
+    } else if (role === "Intern") {
+       
+        const school = await inquirer.prompt(itnQuestions);
+        const employee = new Intern(name, id, email, school);
+        array.push(employee);
+    };
+    const restartAns = await inquirer.prompt(reStart);
+    const { restart } = restartAns;
+    if (restart === "yes") {
         ask();
     } else {
-        const { name, id, email, role} = userResponse;
-        array.push(userResponse);
-        
+        return console.log(array)
     }
-    console.log(array);
-
 }
 ask();
 
