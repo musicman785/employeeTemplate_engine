@@ -1,3 +1,4 @@
+//All require variables for assignment
 const Manager = require("./lib/Manager");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
@@ -7,10 +8,10 @@ const fs = require("fs");
 
 const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
-
+// Variable to access the render function
 const render = require("./lib/htmlRenderer");
 
-//General questions for new Employees
+//General questions for recording new Employees
 const questions = [
     {
         type: "input",
@@ -34,52 +35,59 @@ const questions = [
         name: "role"
     }
 ];
+//variable to hold Question asked if employee is a manager
 const mgrQuestions = {
     type: "input",
     message: "What is your manager’s office number?",
     name: "office"
 };
+//variable to hold Question asked if employee is an engineer
 const egrQuestions = {
     type: "input",
     message: "What is your engineer’s github user name?",
     name: "github"
 };
+//variable to hold Question asked if employee is an intern
 const itnQuestions = {
     type: "input",
     message: "What is your school name?",
     name: "school"
 };
-
+//variable that holds Question asked if more employees need to be added
 const reStart = {
     type: "list",
     message: "Would you like to add another team member?",
     choices: ["yes", "no"],
     name: "restart"
 };
-
+//Variable with array that holds all user responses
 let array = [];
+//asynchronus function to initiate user question propmts
 async function ask() {
-
+    //variable that initiates general info questions
     const userResponse = await inquirer.prompt(questions);
+    //Deconstructor variable to create variables for user response object
     const { name, id, email, role } = userResponse;
+    //conditional statements to access postition questions after general questions
     if (role === "Manager") {
-        
+        //office number question for manager
         const officeNumber = await inquirer.prompt(mgrQuestions);
         const employee = new Manager(name, id, email, officeNumber);
         array.push(employee);
     
     } else if (role === "Engineer") {
-       
+       // github username question for engineer
         const github = await inquirer.prompt(egrQuestions);
         const employee = new Engineer(name, id, email, github);
         array.push(employee);
     
     } else if (role === "Intern") {
-       
+       //school name question for intern
         const school = await inquirer.prompt(itnQuestions);
         const employee = new Intern(name, id, email, school);
         array.push(employee);
     };
+    //variable restarts questions if user needs to input more employees
     const restartAns = await inquirer.prompt(reStart);
     const { restart } = restartAns;
     if (restart === "yes") {
@@ -88,9 +96,25 @@ async function ask() {
         return console.log(array)
     }
 }
+// Calls the ask() function and initiates inquire.prompt 
 ask();
 
+// render(...array); //Why does it create an error? 
 
+//Do I need to create a new html or is the main.html the team.html they are asking for?
+
+//Does the html.render.js dynamically add the info to the respective html pages or do I have to do it manually? 
+
+// fs.readFile("./index.html", ...array, function(err) {
+//     if (err){
+//         throw err;
+//     }else{ 
+//         console.log("success!");
+//     }
+// })
+// After the user has input all employees desired, call the `render` function (required
+// above) and pass in an array containing all employee objects; the `render` function will
+// generate and return a block of HTML including templated divs for each employee!
 
 
 
