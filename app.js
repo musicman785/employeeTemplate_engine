@@ -8,6 +8,7 @@ const fs = require("fs");
 
 const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
+
 // Variable to access the render function
 const render = require("./lib/htmlRenderer");
 
@@ -68,26 +69,35 @@ async function ask() {
     const userResponse = await inquirer.prompt(questions);
     //Deconstructor variable to create variables for user response object
     const { name, id, email, role } = userResponse;
-    //conditional statements to access postition questions after general questions
+    //conditional statements to access Employee role questions after general questions
     if (role === "Manager") {
         //office number question for manager
         const officeNbr = await inquirer.prompt(mgrQuestions);
-        const officeNumber = officeNbr.office 
+        //variable holds nested object input from the manager question object
+        const officeNumber = officeNbr.office
+        //variable holds new Manager contructor
         const employee = new Manager(name, id, email, officeNumber);
+        //Pushes new Employee with Manager role to array
         array.push(employee);
     
     } else if (role === "Engineer") {
        // github username question for engineer
         const git = await inquirer.prompt(egrQuestions);
+        //variable holds nested object input from the Engineer question object
         const github = git.gitHub
+        //variable holds new Engineer contructor
         const employee = new Engineer(name, id, email, github);
+        //Pushes new Employee with Engineer role to array
         array.push(employee);
     
     } else if (role === "Intern") {
        //school name question for intern
         const schoolName = await inquirer.prompt(itnQuestions);
+        //variable holds nested object input from the Intern question object
         const school = schoolName.education
+        //variable holds new Intern contructor
         const employee = new Intern(name, id, email, school);
+        //Pushes new Employee with Intern role to array
         array.push(employee);
     };
     //variable restarts questions if user needs to input more employees
@@ -99,8 +109,9 @@ async function ask() {
         ask();
 
     } else {
-        
+        //variable holds block of html generated 
         const renderInfo = render(array);
+        //Writes team.html file to the outputPath directory using rendered info
         fs.writeFile(outputPath, renderInfo, function(err){
             if(err) {
                 throw err;
@@ -111,24 +122,6 @@ async function ask() {
 }
 // Calls the ask() function and initiates inquire.prompt 
 ask();
-
-; //Why does it create an error? 
-
-//Do I need to create a new html or is the main.html the team.html they are asking for?
-
-//Does the html.render.js dynamically add the info to the respective html pages or do I have to do it manually? 
-
-// fs.readFile("./team.html", ...array, function(err) {
-//     if (err){
-//         throw err;
-//     }else{ 
-//         console.log("success!");
-//     }
-// })
-// After the user has input all employees desired, call the `render` function (required
-// above) and pass in an array containing all employee objects; the `render` function will
-// generate and return a block of HTML including templated divs for each employee!
-
 
 
 // Write code to use inquirer to gather information about the development team members,
