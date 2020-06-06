@@ -45,13 +45,13 @@ const mgrQuestions = {
 const egrQuestions = {
     type: "input",
     message: "What is your engineer’s github user name?",
-    name: "github"
+    name: "gitHub"
 };
 //variable to hold Question asked if employee is an intern
 const itnQuestions = {
     type: "input",
     message: "What is your school name?",
-    name: "school"
+    name: "education"
 };
 //variable that holds Question asked if more employees need to be added
 const reStart = {
@@ -71,41 +71,54 @@ async function ask() {
     //conditional statements to access postition questions after general questions
     if (role === "Manager") {
         //office number question for manager
-        const officeNumber = await inquirer.prompt(mgrQuestions);
+        const officeNbr = await inquirer.prompt(mgrQuestions);
+        const officeNumber = officeNbr.office 
         const employee = new Manager(name, id, email, officeNumber);
         array.push(employee);
     
     } else if (role === "Engineer") {
        // github username question for engineer
-        const github = await inquirer.prompt(egrQuestions);
+        const git = await inquirer.prompt(egrQuestions);
+        const github = git.gitHub
         const employee = new Engineer(name, id, email, github);
         array.push(employee);
     
     } else if (role === "Intern") {
        //school name question for intern
-        const school = await inquirer.prompt(itnQuestions);
+        const schoolName = await inquirer.prompt(itnQuestions);
+        const school = schoolName.education
         const employee = new Intern(name, id, email, school);
         array.push(employee);
     };
     //variable restarts questions if user needs to input more employees
     const restartAns = await inquirer.prompt(reStart);
+    //variable holds the answer for restart question
     const { restart } = restartAns;
+    //conditional statement that executes restart of questions if yes
     if (restart === "yes") {
         ask();
+
     } else {
-        return console.log(array)
+        
+        const renderInfo = render(array);
+        fs.writeFile(outputPath, renderInfo, function(err){
+            if(err) {
+                throw err;
+            }
+        });
+        
     }
 }
 // Calls the ask() function and initiates inquire.prompt 
 ask();
 
-// render(...array); //Why does it create an error? 
+; //Why does it create an error? 
 
 //Do I need to create a new html or is the main.html the team.html they are asking for?
 
 //Does the html.render.js dynamically add the info to the respective html pages or do I have to do it manually? 
 
-// fs.readFile("./index.html", ...array, function(err) {
+// fs.readFile("./team.html", ...array, function(err) {
 //     if (err){
 //         throw err;
 //     }else{ 
