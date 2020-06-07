@@ -25,6 +25,7 @@ To run tests and see if they are passing, go to your terminal and type npm run t
 
 
 ### Example giffy:
+![](./assets/chrisTeam.gif)
 
 ## Author
 
