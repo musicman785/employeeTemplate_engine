@@ -21,6 +21,8 @@ Create a command-line application that dyamically generates an employee team-htm
 
 ## Tests
 To run tests and see if they are passing, go to your terminal and type npm run test. This shoule run 4 test suites and 17 total tests.
+![](./assets/chrisTest.gif)
+
 
 ### Example giffy:
 
