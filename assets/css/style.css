@@ -1,0 +1,15 @@
+.header {
+    background-color: slategray;
+}
+
+.manager {
+    background-color: navy;
+}
+
+.engineer {
+    background-color: #483D8B;
+}
+
+.intern {
+ background-color: #87CEFA;
+}
