@@ -27,6 +27,9 @@ To run tests and see if they are passing, go to your terminal and type npm run t
 ### Example giffy:
 ![](./assets/chrisTeam.gif)
 
+### Example Result:
+![](./assets/example.png)
+
 ## Author
 
 ![ProfileImage](https://avatars2.githubusercontent.com/u/62310334?v=4)
